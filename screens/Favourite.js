@@ -1,26 +1,14 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { Text, FlatList, SafeAreaView } from "react-native";
 import { Dimensions } from "react-native";
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
-import { useDispatch, useSelector } from "react-redux";
-import { removeFromFavorites } from "../redux/actions";
-import uuid from "react-native-uuid";
+import { useSelector } from "react-redux";
+
 import ProductItem from "../components/Product/ProductItem";
 
 const Favourite = () => {
-  const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
-
-  const handleRemoveFromFavorites = (productId) => {
-    dispatch(removeFromFavorites(productId));
-  };
 
   return (
     <SafeAreaView
