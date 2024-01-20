@@ -3,6 +3,7 @@ const initialState = {
   loading: false,
   error: null,
   cart: [],
+  favorites: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +24,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.filter((product) => product.id !== action.payload),
+      };
+
+    case "ADD_TO_FAVORITES":
+      return { ...state, favorites: [...state.favorites, action.payload] };
+
+    case "REMOVE_FROM_FAVORITES":
+      return {
+        ...state,
+        favorites: state.favorites.filter(
+          (product) => product.id !== action.payload
+        ),
       };
 
     default:
