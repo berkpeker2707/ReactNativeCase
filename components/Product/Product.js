@@ -58,6 +58,7 @@ const Product = ({ data }) => {
               image={item.image}
               price={item.price}
               name={item.name}
+              description={item.description}
             />
           </TouchableOpacity>
         )}

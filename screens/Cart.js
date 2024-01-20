@@ -10,9 +10,10 @@ import Header from "../components/Header/Header";
 import { Dimensions } from "react-native";
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
-import { addToCart, removeFromCart } from "../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-native-uuid";
+import handleAddToCart from "../hooks/handleAddToCart";
+import handleRemoveFromCart from "../hooks/handleRemoveFromCart";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,6 @@ const Cart = () => {
     (total, item) => total + parseFloat(item.price),
     0
   );
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  };
-
-  const handleRemoveFromCart = (productId) => {
-    dispatch(removeFromCart(productId));
-  };
 
   if (cart.length === 0) {
     return (
@@ -112,12 +105,13 @@ const Cart = () => {
                 <TouchableOpacity
                   style={{ backgroundColor: "#F3F4F6" }}
                   onPress={() => {
-                    handleAddToCart({
-                      id: item.id,
-                      image: item.image,
-                      price: item.price,
-                      name: item.name,
-                    });
+                    handleAddToCart(
+                      item.id,
+                      item.image,
+                      item.price,
+                      item.name,
+                      dispatch
+                    );
                   }}
                 >
                   <Text
@@ -136,7 +130,7 @@ const Cart = () => {
                 <TouchableOpacity
                   style={{ backgroundColor: "#F3F4F6" }}
                   onPress={() => {
-                    handleRemoveFromCart(item.id);
+                    handleRemoveFromCart(item.id, dispatch);
                   }}
                 >
                   <Text

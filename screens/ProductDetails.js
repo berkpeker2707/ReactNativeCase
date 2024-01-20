@@ -6,8 +6,9 @@ let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 import Star from "../components/icons/Star";
 import GoBackIcon from "../components/icons/GoBackIcon";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import handleAddToCart from "../hooks/handleAddToCart";
+import handleToggleFavorites from "../hooks/handleToggleFavorites";
 
 const ProductDetails = (props) => {
   const {
@@ -20,10 +21,7 @@ const ProductDetails = (props) => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  };
+  const favorites = useSelector((state) => state.favorites);
 
   return (
     <ScrollView>
@@ -77,6 +75,17 @@ const ProductDetails = (props) => {
                 top: 10,
                 right: 10,
               }}
+              onPress={() =>
+                handleToggleFavorites(
+                  productId,
+                  productImage,
+                  productPrice,
+                  productName,
+                  productDescription,
+                  favorites,
+                  dispatch
+                )
+              }
             >
               {/* <Star color={"#D9D9D9"} /> */}
               <Star color={"#FFB800"} />
@@ -141,12 +150,13 @@ const ProductDetails = (props) => {
                 padding: screenWidth * 0.02,
               }}
               onPress={() =>
-                handleAddToCart({
+                handleAddToCart(
                   productId,
                   productImage,
                   productPrice,
                   productName,
-                })
+                  dispatch
+                )
               }
             >
               <Text

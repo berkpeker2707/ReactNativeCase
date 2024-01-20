@@ -5,15 +5,14 @@ import { Dimensions } from "react-native";
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import handleToggleFavorites from "../../hooks/handleToggleFavorites";
+import handleAddToCart from "../../hooks/handleAddToCart";
 
-const ProductItem = ({ id, image, price, name }) => {
+const ProductItem = ({ id, image, price, name, description }) => {
   const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  };
   return (
     <View
       style={{
@@ -57,6 +56,17 @@ const ProductItem = ({ id, image, price, name }) => {
             right: 0,
             padding: 5,
           }}
+          onPress={() =>
+            handleToggleFavorites(
+              id,
+              image,
+              price,
+              name,
+              description,
+              favorites,
+              dispatch
+            )
+          }
         >
           {/* <Star color={"#D9D9D9"} /> */}
           <Star color={"#FFB800"} />
@@ -110,14 +120,7 @@ const ProductItem = ({ id, image, price, name }) => {
           borderRadius: 4,
           padding: screenWidth * 0.02,
         }}
-        onPress={() =>
-          handleAddToCart({
-            id,
-            image,
-            price,
-            name,
-          })
-        }
+        onPress={() => handleAddToCart(id, image, price, name, dispatch)}
       >
         <Text
           style={{
