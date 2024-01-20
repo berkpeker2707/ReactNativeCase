@@ -7,49 +7,32 @@ import Cart from "../../screens/Cart";
 import Favourite from "../../screens/Favourite";
 import Profile from "../../screens/Profile";
 import ProductDetails from "../../screens/ProductDetails";
-
 // import fetchProducts from "../../hooks/fetchProducts";
-
 import HomeIcon from "../../components/icons/HomeIcon";
 import CartIcon from "../../components/icons/CartIcon";
 import StarIcon from "../../components/icons/StarIcon";
 import ProfileIcon from "../../components/icons/ProfileIcon";
 
 import { fetchProductsRequest } from "../../redux/actions";
-import store from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 const RootNavigator = () => {
-  //   const [loading, setLoading] = React.useState(true);
-  //   const [error, setError] = React.useState(null);
-  //   const [data, setData] = React.useState([]);
-  const [cartState, setCartState] = React.useState([]);
-  const [favouritesState, setFavouritesState] = React.useState([]);
-  const [totalCost, setTotalCost] = React.useState([]);
+  //   const [favouritesState, setFavouritesState] = React.useState([]);
+  //   const [totalCost, setTotalCost] = React.useState([]);
   const [toggleModal, setToggleModal] = React.useState(false);
 
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
   const data = useSelector((state) => state.data);
+  const cartLength = useSelector((state) => state.cart.length);
+  console.log("🚀 ~ RootNavigator ~ cartLength:", cartLength);
 
   React.useEffect(() => {
     dispatch(fetchProductsRequest());
   }, [dispatch]);
-
-  //   useEffect(() => {
-  //     dispatch(fetchProductsRequest());
-  //   }, [dispatch]);
-
-  //   React.useEffect(() => {
-  //     store.dispatch(fetchProductsRequest(setData, setLoading, setError));
-  //   }, []);
-
-  //   React.useEffect(() => {
-  //     fetchProducts(setData, setLoading, setError);
-  //   }, []);
 
   if (loading) {
     return (
@@ -92,7 +75,7 @@ const RootNavigator = () => {
             options={{
               headerShown: false,
               tabBarShowLabel: false,
-              tabBarBadge: 59,
+              tabBarBadge: cartLength,
               tabBarIcon: () => <CartIcon />,
             }}
           />
