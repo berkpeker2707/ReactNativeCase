@@ -6,12 +6,24 @@ let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 import Star from "../components/icons/Star";
 import GoBackIcon from "../components/icons/GoBackIcon";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/actions";
 
 const ProductDetails = (props) => {
-  const { productImage, productPrice, productName, productDescription } =
-    props.route.params;
+  const {
+    productId,
+    productImage,
+    productPrice,
+    productName,
+    productDescription,
+  } = props.route.params;
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
 
   return (
     <ScrollView>
@@ -128,6 +140,14 @@ const ProductDetails = (props) => {
                 borderRadius: 4,
                 padding: screenWidth * 0.02,
               }}
+              onPress={() =>
+                handleAddToCart({
+                  productId,
+                  productImage,
+                  productPrice,
+                  productName,
+                })
+              }
             >
               <Text
                 style={{

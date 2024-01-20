@@ -54,6 +54,7 @@ const Product = ({ data }) => {
             }
           >
             <ProductItem
+              id={item.id}
               image={item.image}
               price={item.price}
               name={item.name}

@@ -1,13 +1,19 @@
 import * as React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-
 import Star from "../icons/Star";
-
 import { Dimensions } from "react-native";
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 
-const ProductItem = ({ image, price, name }) => {
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/actions";
+
+const ProductItem = ({ id, image, price, name }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
   return (
     <View
       style={{
@@ -104,6 +110,14 @@ const ProductItem = ({ image, price, name }) => {
           borderRadius: 4,
           padding: screenWidth * 0.02,
         }}
+        onPress={() =>
+          handleAddToCart({
+            id,
+            image,
+            price,
+            name,
+          })
+        }
       >
         <Text
           style={{
