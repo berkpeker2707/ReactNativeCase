@@ -37,6 +37,9 @@ const reducer = (state = initialState, action) => {
         ),
       };
 
+    case "LOAD_STATE_FROM_STORAGE":
+      return { ...state, ...action.payload };
+
     default:
       return state;
   }
