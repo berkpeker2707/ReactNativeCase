@@ -1,5 +1,12 @@
 import * as React from "react";
-import { View, Text, FlatList, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
+import Header from "../components/Header/Header";
 import { Dimensions } from "react-native";
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
@@ -8,17 +15,31 @@ import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-native-uuid";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   var totalPrices = cart.reduce(
     (total, item) => total + parseFloat(item.price),
     0
   );
 
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+  };
+
+  const handleRemoveFromCart = (productId) => {
+    dispatch(removeFromCart(productId));
+  };
+
   if (cart.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Your cart is empty.</Text>
-      </View>
+      <>
+        <Header />
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>Your cart is empty.</Text>
+        </View>
+      </>
     );
   }
 
@@ -31,6 +52,7 @@ const Cart = () => {
         backgroundColor: "background: rgba(255, 255, 255, 1)",
       }}
     >
+      <Header />
       <View
         style={{
           width: screenWidth * 0.9,
@@ -46,32 +68,91 @@ const Cart = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                borderRadius: 4,
-                backgroundColor: "#D9D9D9",
-                padding: 5,
-                margin: 5,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
               }}
             >
-              <Text
+              <View
                 style={{
-                  color: "#000",
-                  fontSize: 16,
-                  fontStyle: "normal",
-                  fontWeight: 400,
+                  borderRadius: 4,
+                  backgroundColor: "#D9D9D9",
+                  padding: 5,
+                  margin: 5,
                 }}
               >
-                {item.name}
-              </Text>
-              <Text
+                <Text
+                  style={{
+                    color: "#000",
+                    fontSize: 16,
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                  }}
+                >
+                  {item.name}
+                </Text>
+                <Text
+                  style={{
+                    color: "#2A59FE",
+                    fontSize: 13,
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                  }}
+                >
+                  {item.price}$
+                </Text>
+              </View>
+              <View
                 style={{
-                  color: "#2A59FE",
-                  fontSize: 13,
-                  fontStyle: "normal",
-                  fontWeight: 500,
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 1,
                 }}
               >
-                {item.price}$
-              </Text>
+                <TouchableOpacity
+                  style={{ backgroundColor: "#F3F4F6" }}
+                  onPress={() => {
+                    handleAddToCart({
+                      id: item.id,
+                      image: item.image,
+                      price: item.price,
+                      name: item.name,
+                    });
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#000",
+                      textAlign: "center",
+                      fontSize: 14,
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      margin: 10,
+                    }}
+                  >
+                    +
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ backgroundColor: "#F3F4F6" }}
+                  onPress={() => {
+                    handleRemoveFromCart(item.id);
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#000",
+                      textAlign: "center",
+                      fontSize: 14,
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      margin: 10,
+                    }}
+                  >
+                    -
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />
