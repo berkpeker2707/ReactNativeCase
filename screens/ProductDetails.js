@@ -23,6 +23,10 @@ const ProductDetails = (props) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
 
+  const isFavoriteItem = (id, favorites) => {
+    return favorites.some((item) => item.id === id);
+  };
+
   return (
     <ScrollView>
       <View
@@ -87,8 +91,11 @@ const ProductDetails = (props) => {
                 )
               }
             >
-              {/* <Star color={"#D9D9D9"} /> */}
-              <Star color={"#FFB800"} />
+              {isFavoriteItem(productId, favorites) ? (
+                <Star color={"#FFB800"} />
+              ) : (
+                <Star color={"#D9D9D9"} />
+              )}
             </TouchableOpacity>
           </View>
           <View
