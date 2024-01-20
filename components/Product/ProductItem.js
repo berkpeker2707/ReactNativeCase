@@ -13,6 +13,10 @@ const ProductItem = ({ id, image, price, name, description }) => {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites);
 
+  const isFavoriteItem = (id, favorites) => {
+    return favorites.some((item) => item.id === id);
+  };
+
   return (
     <View
       style={{
@@ -68,8 +72,11 @@ const ProductItem = ({ id, image, price, name, description }) => {
             )
           }
         >
-          {/* <Star color={"#D9D9D9"} /> */}
-          <Star color={"#FFB800"} />
+          {isFavoriteItem(id, favorites) ? (
+            <Star color={"#FFB800"} />
+          ) : (
+            <Star color={"#D9D9D9"} />
+          )}
         </TouchableOpacity>
       </View>
       <View
