@@ -1,11 +1,35 @@
 import * as React from "react";
-import { SafeAreaView, FlatList, Dimensions } from "react-native";
-import ProductItem from "./ProductItem";
-
+import {
+  SafeAreaView,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+import ProductItem from "./ProductItem";
+
 const Product = ({ data }) => {
+  const navigation = useNavigation();
+
+  const handleProductPress = (
+    productId,
+    productImage,
+    productPrice,
+    productName,
+    productDescription
+  ) => {
+    navigation.navigate("ProductDetails", {
+      productId,
+      productImage,
+      productPrice,
+      productName,
+      productDescription,
+    });
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -18,7 +42,23 @@ const Product = ({ data }) => {
       <FlatList
         data={data}
         renderItem={({ item }) => (
-          <ProductItem image={item.image} price={item.price} name={item.name} />
+          <TouchableOpacity
+            onPress={() =>
+              handleProductPress(
+                item.id,
+                item.image,
+                item.price,
+                item.name,
+                item.description
+              )
+            }
+          >
+            <ProductItem
+              image={item.image}
+              price={item.price}
+              name={item.name}
+            />
+          </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}
         numColumns={2}

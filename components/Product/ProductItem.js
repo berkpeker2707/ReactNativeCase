@@ -73,7 +73,7 @@ const ProductItem = ({ image, price, name }) => {
             fontWeight: 500,
           }}
         >
-          {price}
+          {price}$
         </Text>
       </View>
       <View

@@ -13,6 +13,7 @@ import Home from "./screens/Home";
 import Cart from "./screens/Cart";
 import Favourite from "./screens/Favourite";
 import Profile from "./screens/Profile";
+import ProductDetails from "./screens/ProductDetails";
 
 import fetchProducts from "./hooks/fetchProducts";
 import HomeIcon from "./components/icons/HomeIcon";
@@ -93,6 +94,16 @@ export default function App() {
               headerShown: false,
               tabBarShowLabel: false,
               tabBarIcon: () => <ProfileIcon />,
+            }}
+          />
+          <Tab.Screen
+            name="ProductDetails"
+            component={ProductDetails}
+            options={{
+              tabBarButton: () => null,
+              tabBarVisible: false,
+              headerShown: false,
+              tabBarShowLabel: false,
             }}
           />
         </Tab.Navigator>
