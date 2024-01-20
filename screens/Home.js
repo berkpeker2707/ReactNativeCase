@@ -9,7 +9,7 @@ import Header from "../components/Header/Header";
 import Search from "../components/Search/Search";
 import Filter from "../components/Search/Filter";
 import Product from "../components/Product/Product";
-import RadioButtonFilled from "../components/Buttons/RadioButtonFilled";
+
 const Home = (props) => {
   return (
     <View
