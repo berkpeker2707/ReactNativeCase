@@ -28,7 +28,6 @@ const RootNavigator = () => {
   const error = useSelector((state) => state.error);
   const data = useSelector((state) => state.data);
   const cartLength = useSelector((state) => state.cart.length);
-  console.log("🚀 ~ RootNavigator ~ cartLength:", cartLength);
 
   React.useEffect(() => {
     dispatch(fetchProductsRequest());

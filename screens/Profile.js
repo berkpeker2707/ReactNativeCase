@@ -4,7 +4,10 @@ import { View, Text } from "react-native";
 const Profile = () => {
   return (
     <View>
-      <Text>This should be profile page</Text>
+      <Text>
+        This should be the profile screen, yet the assignment did not require
+        auth, so meh...
+      </Text>
     </View>
   );
 };
