@@ -10,6 +10,19 @@ import Filter from "../components/Search/Filter";
 import Product from "../components/Product/Product";
 
 const Home = (props) => {
+  const [searchText, setSearchText] = React.useState("");
+
+  const handleSearch = (text) => {
+    setSearchText(text);
+  };
+
+  const filterProducts = (data) => {
+    return data.filter(
+      (product) =>
+        product.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchText.toLowerCase())
+    );
+  };
   return (
     <View
       style={{
@@ -21,12 +34,12 @@ const Home = (props) => {
       }}
     >
       <Header />
-      <Search />
+      <Search onSearch={handleSearch} />
       <Filter
         toggleModal={props.toggleModal}
         setToggleModal={props.setToggleModal}
       />
-      <Product data={props.data} />
+      <Product data={props.data} onFilter={filterProducts} />
     </View>
   );
 };

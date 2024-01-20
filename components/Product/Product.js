@@ -11,8 +11,9 @@ const screenHeight = Dimensions.get("window").height;
 
 import ProductItem from "./ProductItem";
 
-const Product = ({ data }) => {
+const Product = ({ data, onFilter }) => {
   const navigation = useNavigation();
+  const [filteredData, setFilteredData] = React.useState(data);
 
   const handleProductPress = (
     productId,
@@ -30,6 +31,14 @@ const Product = ({ data }) => {
     });
   };
 
+  React.useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  React.useEffect(() => {
+    setFilteredData(onFilter(data));
+  }, [onFilter, data]);
+
   return (
     <SafeAreaView
       style={{
@@ -40,7 +49,7 @@ const Product = ({ data }) => {
       }}
     >
       <FlatList
-        data={data}
+        data={filteredData}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() =>

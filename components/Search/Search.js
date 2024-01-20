@@ -1,13 +1,18 @@
 import * as React from "react";
 import { View, TextInput } from "react-native";
-
 import SearchIcon from "../icons/SearchIcon";
-
 import { Dimensions } from "react-native";
+
 let screenWidth = Dimensions.get("window").width;
 let screenHeight = Dimensions.get("window").height;
 
-const Search = () => {
+const Search = ({ onSearch }) => {
+  const handleSearch = (text) => {
+    if (onSearch) {
+      onSearch(text);
+    }
+  };
+
   return (
     <View
       style={{
@@ -33,6 +38,7 @@ const Search = () => {
         <TextInput
           placeholder="Search"
           placeholderTextColor="rgb(98,107,139)"
+          onChangeText={handleSearch}
         />
       </View>
     </View>

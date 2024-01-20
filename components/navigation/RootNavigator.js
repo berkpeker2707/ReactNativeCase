@@ -19,8 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Tab = createBottomTabNavigator();
 
 const RootNavigator = () => {
-  //   const [favouritesState, setFavouritesState] = React.useState([]);
-  //   const [totalCost, setTotalCost] = React.useState([]);
   const [toggleModal, setToggleModal] = React.useState(false);
 
   const dispatch = useDispatch();
